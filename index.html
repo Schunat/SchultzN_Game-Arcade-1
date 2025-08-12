@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset='utf-8'>
+    <title>Game Arcade 1</title>
+    <meta name="author" content="[Natalie Schultz]">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+</head>
+<body>
+    <h1>What would you like to do?</h1>
+    <button onclick="guessingGame();">Guessing Game</button>
+    <button onclick="consultOracle();">Consult the Oracle</button>
+    <button onclick="bnh();">Bear, Ninja, Hunter</button>
+
+    <!--<h1>Guessing Game</h1>
+    <div id="game">
+        <p id="prompt">Guess a number between 1 and 10:</p>
+        <input type="number" id="guessInput" min="1" max="10">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <p id="feedback"></p>
+        <p id="summary"></p>
+    </div>
+
+    <h1 style="margin-top:26px;">Consult the Oracle</h1>
+    <div class="eight-ball">
+        <div id="response-window" class="window">
+            Ask me anything!
+        </div>
+    </div>
+    <div id="question-box" class="question"></div>
+    <div id="thankyou" class="thanks"></div>-->
+
+    <p id="demo"></p>
+    <p id="computer"></p>
+    <p id="outcome"></p>
+    <div id="results">  </div>
+    <script>
+        const words = ['Bear', 'Ninja', 'Hunter']
+        let index = 0
+        let uname = ""
+        let amessage = ""
+        let player = ""
+        let computer = ""
+        let combination = 0
+        let winner = ""
+        let playAgain = true;
+        let wins = 0
+        let losses = 0
+        let ties = 0
+        let totalGames = 0
+        let userGuess = 0
+        const guessAllowed = 3; // Maximum number of guesses allowed
+        let randonNumber = 0
+        let attempts = 0;
+        function guessingGame() {
+
+            function checkGuess(userGuess, attempts) {
+                while (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
+                    userGuess = parseInt(prompt("Please enter a valid number between 1 and 10."));
+
+                }
+                if (userGuess === randomNumber) {
+                    alert("Your guess was correct!");
+                    alert(`You made ${attempts} guess${attempts > 1 ? "es" : ""}.`);
+                    return null;
+                }
+                if (attempts < guessAllowed) {
+                    if (userGuess > randomNumber) {
+                        userGuess = parseInt(prompt("Your guess is too high. Guess again."));
+                    } else {
+                        userGuess = parseInt(prompt("Your guess is too low. Guess again."));
+                    }
+                    return userGuess;
+                } else {
+                    alert(`Sorry, you've used all your attempts. The correct number was ${randomNumber}.`);
+                    return null;
+                }
+            }
+            function startGame() {
+                userGuess = parseInt(prompt('Enter a number between 1 and 10'));
+                randomNumber = Math.floor(Math.random() * 10) + 1;
+                // console.log("Secret number:", randomNumber); // Optional: comment out or remove
+                attempts = 0;
+
+                // document.getElementById("feedback").textContent = "";
+                // document.getElementById("summary").textContent = "";
+
+                while (attempts < guessAllowed && userGuess !== null) {
+                    // userGuess = parseInt(prompt('Enter a number between 1 and 10'));
+                    attempts++;
+                    // console.log("attempts:", attempts); // Optional: comment out or remove
+
+                    userGuess = checkGuess(userGuess, attempts);
+                    // console.log("userGuess:", userGuess); // Optional: comment out or remove
+
+                }
+                setTimeout(() => {
+                    if (confirm("Would you like to play again?")) {
+                        startGame();
+                    } else {
+                        alert("Thanks for playing!");
+
+                    }
+                }, 100);
+                // checkGuess(); // Start the guessing game
+            }
+            startGame(); // Call the function to start the game
+            
+        }
+        function consultOracle() {
+            // 1. Responses array: (eight responses, you may edit for creativity)
+            var responses = [
+                "Yes, definitely.",
+                "No, certainly not.",
+                "Ask again later.",
+                "It is very likely.",
+                "Doubtful, try again.",
+                "Yes, count on it.",
+                "No, do not count on it.",
+                "My sources say yes."
+            ];
+
+            // 2. Posttest loop: repeat at least once
+            var continuePlaying;
+            do {
+                // Prompt for the user's question
+                var question = prompt("Consult The Oracle and ask any 'yes' or 'no' question.");
+                // If user cancels prompt, stop the program
+                if (question === null) {
+                    continuePlaying = "no";
+                    break;
+                }
+
+                // Display user question on page
+                document.getElementById("question-box").innerHTML = "<b>You asked:</b> " + question;
+
+                // Get random index 0-7
+                var randomIndex = Math.floor(Math.random() * 8);
+
+                // Display magic eight ball response in the window
+                document.getElementById("response-window").textContent = responses[randomIndex];
+
+                // Prompt user to play again
+                continuePlaying = prompt("Would you like to ask another question? (yes or no)").toLowerCase();
+                // If user cancels prompt, treat as "no"
+                if (continuePlaying === null) {
+                    continuePlaying = "no";
+                }
+            } while (continuePlaying === "yes");
+
+            // When finished, thank the user
+            document.getElementById("thankyou").textContent = "Thank you for playing with the Magic Eight Ball!";
+        }
+        function bnh() {
+
+
+            uname = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');
+            amessage = `Hi: ${uname} Let's Play!'`;
+            alert(amessage);
+            while (playAgain) {
+                // 1. Prompt and process game
+                player = prompt('Who are you: Bear, Ninja, or Hunter? ');
+                if (player === null) {
+                    alert("Game cancelled. Goodbye!");
+                    break; // or set playAgain = false;
+                }
+                while (player == "" ||
+                    !words.some(word => word.toLowerCase().includes(player.trim().toLowerCase()))
+                ) {
+                    player = prompt("Invalid input. Try again: Bear, Ninja, or Hunter");
+                }
+                player = player.trim().toLowerCase();
+                console.log(player);
+                console.log(computer);
+                //console.log(amessage + ' this is an example of a hardcoded text string concatenated after a variable.');
+                document.getElementById('demo').innerHTML = `${uname}, you picked ${player} !`
+                //computer random pick
+
+                index = Math.floor(Math.random() * words.length) // random 0 to 1 times the number of words rounded down
+                computer = words[index]
+
+                document.getElementById('computer').innerHTML = `The computer picked ${computer}!`
+                //console.log(`${variable}, Another text string ` + anotherVariable + '');
+                combination = -1
+                if (player == "Bear".toLowerCase()) {
+                    if (computer.toLowerCase() == "Bear".toLowerCase()) {
+                        combination = 1
+                    } else {
+                        if (computer.toLowerCase() == "Ninja".toLowerCase()) {
+                            combination = 4
+                        } else {
+                            combination = 8 // Hunter
+                        }
+                    }
+                } else {
+                    if (player == "Ninja".toLowerCase()) {
+                        if (computer.toLowerCase() == "Bear".toLowerCase()) {
+                            combination = 9
+                        } else {
+                            if (computer.toLowerCase() == "Ninja".toLowerCase()) {
+                                combination = 2
+                            } else {
+                                combination = 5 // Hunter
+                            }
+                        }
+                    } else { // player chose Hunter
+                        if (computer.toLowerCase() == "Bear".toLowerCase()) {
+                            combination = 6
+                        } else {
+                            if (computer.toLowerCase() == "Ninja".toLowerCase()) {
+                                combination = 7
+                            } else {
+                                combination = 3 // Hunter
+                            }
+                        }
+                    }
+                }
+                switch (combination) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        winner = "Tie!!";
+                        ties++
+                        console.log("The computer picked", computer, "The player picked", player);
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                        winner = "You win!!";
+                        wins++
+                        console.log("The computer picked", computer, "The player picked", player);
+                        break;
+                    case 7:
+                    case 8:
+                    case 9:
+                        winner = "Computer wins!!";
+                        losses++
+                        console.log("The computer picked", computer, "The player picked", player);
+                        break;
+                    default: winner = "error"
+                }
+                // 2. Display result
+                document.getElementById('outcome').innerHTML = winner;
+                totalGames++
+                // 3. Prompt to play again
+                const again = prompt("Do you want to play again? (yes or no)");
+                if (again === null || again.trim().toLowerCase() === "no") {
+                    playAgain = false;
+                }
+                document.getElementById("results").innerHTML =
+                    `<p>Total games played: ${totalGames}</p>
+                                                                    <p>Wins: ${wins}, Losses: ${losses}, Ties: ${ties}</p>`;
+
+            }
+        }
+
+
+
+
+    </script>
+</body>
+</html>
