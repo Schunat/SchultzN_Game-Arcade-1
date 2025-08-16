@@ -54,6 +54,7 @@
         const guessAllowed = 3; // Maximum number of guesses allowed
         let randonNumber = 0
         let attempts = 0;
+        let resultList = [];
         function guessingGame() {
 
             function checkGuess(userGuess, attempts) {
@@ -107,7 +108,7 @@
                 // checkGuess(); // Start the guessing game
             }
             startGame(); // Call the function to start the game
-            
+
         }
         function consultOracle() {
             // 1. Responses array: (eight responses, you may edit for creativity)
@@ -134,13 +135,13 @@
                 }
 
                 // Display user question on page
-                document.getElementById("question-box").innerHTML = "<b>You asked:</b> " + question;
+                alert ("You asked:" + question);
 
                 // Get random index 0-7
                 var randomIndex = Math.floor(Math.random() * 8);
 
-                // Display magic eight ball response in the window
-                document.getElementById("response-window").textContent = responses[randomIndex];
+                // Display The Oracle response in the window
+                alert (responses[randomIndex]);
 
                 // Prompt user to play again
                 continuePlaying = prompt("Would you like to ask another question? (yes or no)").toLowerCase();
@@ -151,7 +152,7 @@
             } while (continuePlaying === "yes");
 
             // When finished, thank the user
-            document.getElementById("thankyou").textContent = "Thank you for playing with the Magic Eight Ball!";
+            alert("Thank you for playing Consult The Oracle!");
         }
         function bnh() {
 
@@ -160,6 +161,8 @@
             amessage = `Hi: ${uname} Let's Play!'`;
             alert(amessage);
             while (playAgain) {
+                // Preparing results
+                resultList = []
                 // 1. Prompt and process game
                 player = prompt('Who are you: Bear, Ninja, or Hunter? ');
                 if (player === null) {
@@ -172,16 +175,16 @@
                     player = prompt("Invalid input. Try again: Bear, Ninja, or Hunter");
                 }
                 player = player.trim().toLowerCase();
-                console.log(player);
-                console.log(computer);
+                // console.log(player);
+                // console.log(computer);
                 //console.log(amessage + ' this is an example of a hardcoded text string concatenated after a variable.');
-                document.getElementById('demo').innerHTML = `${uname}, you picked ${player} !`
+                resultList.push(`${uname}, you picked ${player} !`)
                 //computer random pick
 
                 index = Math.floor(Math.random() * words.length) // random 0 to 1 times the number of words rounded down
                 computer = words[index]
 
-                document.getElementById('computer').innerHTML = `The computer picked ${computer}!`
+                resultList.push(`The computer picked ${computer}!`)
                 //console.log(`${variable}, Another text string ` + anotherVariable + '');
                 combination = -1
                 if (player == "Bear".toLowerCase()) {
@@ -223,38 +226,40 @@
                     case 3:
                         winner = "Tie!!";
                         ties++
-                        console.log("The computer picked", computer, "The player picked", player);
+                        // console.log("The computer picked", computer, "The player picked", player);
                         break;
                     case 4:
                     case 5:
                     case 6:
                         winner = "You win!!";
                         wins++
-                        console.log("The computer picked", computer, "The player picked", player);
+                        // console.log("The computer picked", computer, "The player picked", player);
                         break;
                     case 7:
                     case 8:
                     case 9:
                         winner = "Computer wins!!";
                         losses++
-                        console.log("The computer picked", computer, "The player picked", player);
+                        // console.log("The computer picked", computer, "The player picked", player);
                         break;
                     default: winner = "error"
                 }
                 // 2. Display result
-                document.getElementById('outcome').innerHTML = winner;
+                resultList.push(winner);
                 totalGames++
                 // 3. Prompt to play again
                 const again = prompt("Do you want to play again? (yes or no)");
                 if (again === null || again.trim().toLowerCase() === "no") {
                     playAgain = false;
                 }
-                document.getElementById("results").innerHTML =
-                    `<p>Total games played: ${totalGames}</p>
-                                                                    <p>Wins: ${wins}, Losses: ${losses}, Ties: ${ties}</p>`;
+                resultList.push(
+                    `Total games played: ${totalGames}\n` +
+                    `Wins: ${ wins }, Losses: ${ losses }, Ties: ${ ties }`);
+                    
 
             }
-        }
+                alert(resultList.join("\n"));
+            }
 
 
 
